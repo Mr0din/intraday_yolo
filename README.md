@@ -7,3 +7,5 @@ unforfunately this method gave about 56% accuracy (i have seen better) and the o
 the learning here is how crucial is to determine a stoploos is. So as next step i will try to createa model that will only predict the stoploss
 i saw that if the stop loss was adjusted correctly i was gaining about 2 percent profit in the model 
 
+
+ps: unfortunaltey the trained model is 54 mb (yolo small) so i am not able to upload it here, et me try and find a place for it, will update!
