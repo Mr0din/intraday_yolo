@@ -3,18 +3,14 @@
 investment =400000
 profit=10
 category_index=[1,2,3]
-
+interval_percentage=0.8
 def no_of_shares(investment,stock_price):
     no_of_shares= round(investment/stock_price)
     return no_of_shares
 
 
 
-def conn(n): # data connection 
-    conn = MongoClient("192.168.0.10", 27017)
-    db = conn.market
-    collection = db[n]
-    return collection
+
 
 
 def taxes(no_of_shares,sell_value,buy_value,diff):
@@ -59,18 +55,20 @@ def check_lables( profit, call):
     return label
 
 
-def category_generator(first,next):
-    high_future_price = next['high'].max()
-    low_future_price=next['low'].min()
+def category_generator(first,nxt):
+    high_future_price = nxt['high'].max()
+    low_future_price=nxt['low'].min()
     buy_price= first['close'].iloc[-1]
+    
     #shares= no_of_shares(investment,buy_price)
-    if abs(high_future_price-buy_price) > abs(buy_price-low_future_price):
+    if ((high_future_price-buy_price)/buy_price )*100 >=((buy_price-low_future_price)/buy_price )*100 and ((high_future_price-buy_price)/buy_price )*100 >= interval_percentage:
+        
         call=1 # buy 
         # buy_value=buy_price
         # sell_value=high_future_price
         # diff= abs(buy_price-sell_value)*shares
-    elif abs(buy_price-high_future_price) < abs(buy_price-low_future_price):
-        call= 2 # sell
+    elif ((buy_price-low_future_price)/buy_price )*100 >= interval_percentage :
+        call=2 # sell
         # sell_value=low_future_price
         # buy_value=buy_price
         # diff= abs(buy_price-sell_value)*shares
